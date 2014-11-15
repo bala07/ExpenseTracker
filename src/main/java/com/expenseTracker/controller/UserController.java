@@ -17,12 +17,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/list")
-    public ModelAndView list() {
+    @RequestMapping("/users")
+    public ModelAndView userList() {
         List<User> users = userService.findAllUsers();
         Map<String, List<User>> userListModel = new HashMap<String, List<User>>();
         userListModel.put("users", users);
 
-        return new ModelAndView("list", userListModel);
+        return new ModelAndView("users", userListModel);
     }
 }
