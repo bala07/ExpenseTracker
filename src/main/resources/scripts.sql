@@ -15,7 +15,7 @@ CREATE TABLE user
 );
 
 
-CREATE TABLE transaction
+CREATE TABLE expense
 (
   id INT NOT NULL AUTO_INCREMENT,
   expense_sheet_id INT NOT NULL,
@@ -25,13 +25,13 @@ CREATE TABLE transaction
   FOREIGN KEY (payer_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE transaction_user_join
+CREATE TABLE expense_user
 (
   id INT NOT NULL,
-  transaction_id INT NOT NULL,
+  expense_id INT NOT NULL,
   user_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (transaction_id) REFERENCES transaction(id) ON DELETE CASCADE,
+  FOREIGN KEY (expense_id) REFERENCES expense(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 

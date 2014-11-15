@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "transaction")
-public class Transaction implements Serializable {
+@Table(name = "expense")
+public class Expense implements Serializable {
 
     private Integer id;
     private Integer expenseSheetId;
@@ -26,8 +26,8 @@ public class Transaction implements Serializable {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "transaction_user",
-            joinColumns = {@JoinColumn(name = "transaction_id", referencedColumnName = "id")},
+    @JoinTable(name = "expense_user",
+            joinColumns = {@JoinColumn(name = "expense_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     public List<User> getBeneficiaries() {
         return beneficiaries;

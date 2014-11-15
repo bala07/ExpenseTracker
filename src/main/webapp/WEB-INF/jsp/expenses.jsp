@@ -5,17 +5,17 @@
         <title></title>
     </head>
     <body>
-        <h1>List of transactions</h1>
-        <c:forEach var="transaction" items="${transactions}">
-            <p>Id => ${transaction.id}</p>
+        <h1>List of expenses</h1>
+        <c:forEach var="expense" items="${expenses}">
+            <p>Id => ${expense.id}</p>
 
-            <p>Sheet id => ${transaction.expenseSheetId}</p>
+            <p>Sheet id => ${expense.expenseSheetId}</p>
 
-            <p>Payer name => ${transaction.payer.name}</p>
+            <p>Payer name => ${expense.payer.name}</p>
 
             <p>Beneficiaries => </p>
             <br/>
-            <c:forEach var="user" items="${transaction.beneficiaries}">
+            <c:forEach var="user" items="${expense.beneficiaries}">
                 <p>Beneficiary name => ${user.name}</p>
 
                 <p>Beneficiary balance => ${user.balance}</p>
