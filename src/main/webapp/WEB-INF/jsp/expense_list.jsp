@@ -9,7 +9,7 @@
         <c:forEach var="expense" items="${expenses}">
             <p>Id => ${expense.id}</p>
 
-            <p>Sheet id => ${expense.expenseSheetId}</p>
+            <p>Sheet id => ${expense.expenseSheet.id}</p>
 
             <p>Payer name => ${expense.payer.name}</p>
 

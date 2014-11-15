@@ -23,6 +23,6 @@ public class UserController {
         Map<String, List<User>> userListModel = new HashMap<String, List<User>>();
         userListModel.put("users", users);
 
-        return new ModelAndView("users", userListModel);
+        return new ModelAndView("user_list", userListModel);
     }
 }

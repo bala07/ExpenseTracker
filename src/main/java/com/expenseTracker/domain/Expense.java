@@ -9,7 +9,7 @@ import java.util.List;
 public class Expense implements Serializable {
 
     private Integer id;
-    private Integer expenseSheetId;
+    private ExpenseSheet expenseSheet;
     private User payer;
     private List<User> beneficiaries;
 
@@ -20,9 +20,10 @@ public class Expense implements Serializable {
         return id;
     }
 
-    @Column(name = "expense_sheet_id")
-    public Integer getExpenseSheetId() {
-        return expenseSheetId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "expense_sheet_id", referencedColumnName = "id")
+    public ExpenseSheet getExpenseSheet() {
+        return expenseSheet;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -33,8 +34,8 @@ public class Expense implements Serializable {
         return beneficiaries;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(table = "user", name = "id", referencedColumnName = "payer_id", unique = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "payer_id", referencedColumnName = "id")
     public User getPayer() {
         return payer;
     }
@@ -43,8 +44,8 @@ public class Expense implements Serializable {
         this.id = id;
     }
 
-    public void setExpenseSheetId(Integer expenseSheetId) {
-        this.expenseSheetId = expenseSheetId;
+    public void setExpenseSheet(ExpenseSheet expenseSheet) {
+        this.expenseSheet = expenseSheet;
     }
 
     public void setBeneficiaries(List<User> paidForUsers) {

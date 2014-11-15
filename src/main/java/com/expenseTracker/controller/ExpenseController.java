@@ -2,7 +2,8 @@ package com.expenseTracker.controller;
 
 import com.expenseTracker.domain.Expense;
 import com.expenseTracker.service.ExpenseService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
 
-    private final Logger logger = Logger.getLogger(ExpenseController.class);
+    private final Logger logger = LoggerFactory.getLogger(ExpenseController.class);
 
     @RequestMapping("/expenses")
     public ModelAndView expenseList() {
@@ -28,6 +29,6 @@ public class ExpenseController {
         logger.info("Number of expenses => " + expenses.size());
         logger.info("Expense id => " + expenses.get(0).getId());
 
-        return new ModelAndView("expenses", expenseListModel);
+        return new ModelAndView("expense_list", expenseListModel);
     }
 }
