@@ -22,6 +22,24 @@ public class ExpenseSheetController {
     @Autowired
     private ExpenseSheetService expenseSheetService;
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
+
+    @RequestMapping(value = "/expense-sheet/create-expense-sheet")
+    public ModelAndView createExpenseSheet() {
+        ExpenseSheet expenseSheet = new ExpenseSheet();
+        expenseSheetService.addExpenseSheet(expenseSheet);
+
+        LOGGER.info("Created new expense sheet with id => {}", expenseSheet.getId());
+        LOGGER.info("Redirecting to => {}", "/expenseSheet/" + expenseSheet.getId());
+
+        System.out.println("expenseSheet = " + expenseSheet.getId());
+
+        return new ModelAndView("redirect:/expense-sheet/" + expenseSheet.getId());
+    }
+
     @RequestMapping(value = "/expense-sheet/{expenseSheetId}", method = RequestMethod.GET)
     public ModelAndView getExpenseSheet(@PathVariable int expenseSheetId) {
         ExpenseSheet expenseSheet = expenseSheetService.findExpenseSheet(expenseSheetId);
