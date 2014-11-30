@@ -11,6 +11,7 @@ public class Expense implements Serializable {
     private Integer id;
     private ExpenseSheet expenseSheet;
     private User payer;
+    private Integer amountPaid;
     private List<User> beneficiaries;
 
     @Id
@@ -26,18 +27,23 @@ public class Expense implements Serializable {
         return expenseSheet;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "payer_id", referencedColumnName = "id")
+    public User getPayer() {
+        return payer;
+    }
+
+    @Column(name = "amount_paid")
+    public Integer getAmountPaid() {
+        return amountPaid;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "expense_user",
             joinColumns = {@JoinColumn(name = "expense_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     public List<User> getBeneficiaries() {
         return beneficiaries;
-    }
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "payer_id", referencedColumnName = "id")
-    public User getPayer() {
-        return payer;
     }
 
     public void setId(Integer id) {
@@ -54,5 +60,9 @@ public class Expense implements Serializable {
 
     public void setPayer(User payer) {
         this.payer = payer;
+    }
+
+    public void setAmountPaid(Integer amountPaid) {
+        this.amountPaid = amountPaid;
     }
 }
