@@ -26,7 +26,7 @@ public class ExpenseSheetServiceImpl implements ExpenseSheetService {
     }
 
     @Override
-    public ExpenseSheet findExpenseSheet(int id) {
+    public ExpenseSheet getExpenseSheet(int id) {
         return expenseSheetDao.findExpenseSheet(id);
     }
 }

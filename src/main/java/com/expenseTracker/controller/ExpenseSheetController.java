@@ -1,7 +1,12 @@
 package com.expenseTracker.controller;
 
 import com.expenseTracker.domain.ExpenseSheet;
+import com.expenseTracker.nonDomain.Settlement;
+import com.expenseTracker.service.DebtSettlementService;
 import com.expenseTracker.service.ExpenseSheetService;
+import com.expenseTracker.viewmodel.SettlementViewModel;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.google.common.collect.Maps.newHashMap;
@@ -21,6 +27,8 @@ public class ExpenseSheetController {
 
     @Autowired
     private ExpenseSheetService expenseSheetService;
+    @Autowired
+    private DebtSettlementService debtSettlementService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -42,7 +50,7 @@ public class ExpenseSheetController {
 
     @RequestMapping(value = "/expense-sheet/{expenseSheetId}", method = RequestMethod.GET)
     public ModelAndView getExpenseSheet(@PathVariable int expenseSheetId) {
-        ExpenseSheet expenseSheet = expenseSheetService.findExpenseSheet(expenseSheetId);
+        ExpenseSheet expenseSheet = expenseSheetService.getExpenseSheet(expenseSheetId);
 
         LOGGER.info("Number of users => {}", expenseSheet.getUsers().size());
         LOGGER.info("Number of expenses => ", expenseSheet.getExpenses().size());
@@ -51,5 +59,24 @@ public class ExpenseSheetController {
         model.put("expenseSheet", expenseSheet);
 
         return new ModelAndView("expense_sheet", model);
+    }
+
+    @RequestMapping(value = "/expense-sheet/{expenseSheetId}/settlements", method = RequestMethod.GET)
+    public ModelAndView getSettlementList(@PathVariable int expenseSheetId) {
+        ExpenseSheet expenseSheet = expenseSheetService.getExpenseSheet(expenseSheetId);
+
+        List<Settlement> settlements = debtSettlementService.computeSettlements(expenseSheet);
+
+        List<SettlementViewModel> settlementViewModelList = Lists.transform(settlements, new Function<Settlement, SettlementViewModel>() {
+            @Override
+            public SettlementViewModel apply(Settlement settlement) {
+                return new SettlementViewModel(settlement.debtorName, settlement.creditorName, settlement.amountSettled);
+            }
+        });
+
+        Map<String, List<SettlementViewModel>> model = newHashMap();
+        model.put("settlements", settlementViewModelList);
+
+        return new ModelAndView("settlements", model);
     }
 }

@@ -9,5 +9,5 @@ public interface ExpenseSheetService {
 
     void deleteExpenseSheet(ExpenseSheet expenseSheet);
 
-    ExpenseSheet findExpenseSheet(int id);
+    ExpenseSheet getExpenseSheet(int id);
 }
