@@ -11,8 +11,13 @@ import java.util.List;
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao {
-    @Autowired
+
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void addUser(User user) {
@@ -25,10 +30,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(int id) {
-        User user = (User) sessionFactory.getCurrentSession().load(User.class, id);
-        if (user != null) {
-            sessionFactory.getCurrentSession().delete(user);
+    public void deleteUser(User user) {
+        User userFromDb = (User) sessionFactory.getCurrentSession().load(User.class, user.getId());
+        if (userFromDb != null) {
+            sessionFactory.getCurrentSession().delete(userFromDb);
         }
     }
 
