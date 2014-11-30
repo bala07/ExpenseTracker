@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class ExpenseDaoImpl implements ExpenseDao {
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public ExpenseDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void addExpense(Expense expense) {
@@ -38,8 +42,8 @@ public class ExpenseDaoImpl implements ExpenseDao {
     public Expense findExpense(int id) {
         List<Expense> expenses = sessionFactory
                 .getCurrentSession()
-                .createQuery("from Expense t where t.id = :transactionId")
-                .setParameter("transactionId", id)
+                .createQuery("from Expense e where e.id = :expenseId")
+                .setParameter("expenseId", id)
                 .list();
 
         return expenses.size() > 0 ? expenses.get(0) : null;
