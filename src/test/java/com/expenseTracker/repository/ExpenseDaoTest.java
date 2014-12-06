@@ -1,14 +1,12 @@
-package repository;
+package com.expenseTracker.repository;
 
 import com.expenseTracker.domain.Expense;
-import com.expenseTracker.repository.ExpenseDao;
-import com.expenseTracker.repository.ExpenseDaoImpl;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ExpenseDaoTests {
+public class ExpenseDaoTest {
 
     @Mock
     private SessionFactory sessionFactory;
@@ -28,7 +26,7 @@ public class ExpenseDaoTests {
 
     private ExpenseDao expenseDao;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         initMocks(this);
         expenseDao = new ExpenseDaoImpl(sessionFactory);
@@ -123,6 +121,4 @@ public class ExpenseDaoTests {
 
         assertThat(expenses, is(expectedExpenses));
     }
-
-
 }

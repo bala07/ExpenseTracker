@@ -1,14 +1,12 @@
-package repository;
+package com.expenseTracker.repository;
 
 import com.expenseTracker.domain.User;
-import com.expenseTracker.repository.UserDao;
-import com.expenseTracker.repository.UserDaoImpl;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class UserDaoTests {
+public class UserDaoTest {
     @Mock
     private SessionFactory sessionFactory;
     @Mock
@@ -27,7 +25,7 @@ public class UserDaoTests {
 
     private UserDao userDao;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         initMocks(this);
         userDao = new UserDaoImpl(sessionFactory);
@@ -37,7 +35,6 @@ public class UserDaoTests {
     @Test
     public void shouldAddUser() {
         User user = new User();
-
         userDao.addUser(user);
 
         verify(currentSession).save(user);
