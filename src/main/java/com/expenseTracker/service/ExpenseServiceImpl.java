@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
-    @Autowired
     private ExpenseDao expenseDao;
+
+    @Autowired
+    public ExpenseServiceImpl(ExpenseDao expenseDao) {
+        this.expenseDao = expenseDao;
+    }
 
     @Override
     public void addExpense(Expense expense) {

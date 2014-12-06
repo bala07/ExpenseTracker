@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ExpenseSheetServiceImpl implements ExpenseSheetService {
-    @Autowired
     private ExpenseSheetDao expenseSheetDao;
+
+    @Autowired
+    public ExpenseSheetServiceImpl(ExpenseSheetDao expenseSheetDao) {
+        this.expenseSheetDao = expenseSheetDao;
+    }
 
     @Override
     public void addExpenseSheet(ExpenseSheet expenseSheet) {
