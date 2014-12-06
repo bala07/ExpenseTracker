@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 
-public class UserServiceTest {
+public class UserServiceImplTest {
     @Mock
     private UserDao userDao;
 
