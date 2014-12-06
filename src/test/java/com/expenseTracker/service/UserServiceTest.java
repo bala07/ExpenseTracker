@@ -1,14 +1,10 @@
-package service;
+package com.expenseTracker.service;
 
 import com.expenseTracker.domain.User;
 import com.expenseTracker.repository.UserDao;
-import com.expenseTracker.service.UserService;
-import com.expenseTracker.service.UserServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
-
-import java.util.List;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -16,13 +12,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class UserServiceTests {
+
+public class UserServiceTest {
     @Mock
     private UserDao userDao;
 
     private UserService userService;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         initMocks(this);
         userService = new UserServiceImpl(userDao);
