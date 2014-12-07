@@ -22,8 +22,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/{expenseSheetId}/users")
-    public ModelAndView userList(@PathVariable final int expenseSheetId) {
+    @RequestMapping(value = "/{expenseSheetId}/users")
+    public ModelAndView userList(@PathVariable final Integer expenseSheetId) {
         List<User> users = userService.getUsersOfExpenseSheet(expenseSheetId);
         Map<String, List<User>> userListModel = new HashMap<String, List<User>>();
         userListModel.put("users", users);
