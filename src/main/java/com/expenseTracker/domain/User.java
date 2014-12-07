@@ -13,7 +13,6 @@ public class User implements Serializable {
     private List<Expense> paidForExpenses;
     private ExpenseSheet expenseSheet;
 
-
     @Id
     @GeneratedValue
     @Column(name = "id")

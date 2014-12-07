@@ -20,8 +20,12 @@ import static com.google.common.collect.Lists.newArrayList;
 @Component
 public class DebtSettlementServiceImpl implements DebtSettlementService {
 
-    @Autowired
     private DebtSettlementHelper debtSettlementHelper;
+
+    @Autowired
+    public DebtSettlementServiceImpl(DebtSettlementHelper debtSettlementHelper) {
+        this.debtSettlementHelper = debtSettlementHelper;
+    }
 
     @Override
     public List<Settlement> computeSettlements(ExpenseSheet expenseSheet) {
@@ -43,33 +47,16 @@ public class DebtSettlementServiceImpl implements DebtSettlementService {
             }
         }
 
-       return newArrayList(Collections2.transform(userBalanceSummaryMap.entrySet(), new Function<Map.Entry<Integer, UserBalanceSummary>, UserBalanceSummary>() {
-           @Override
-           public UserBalanceSummary apply(Map.Entry<Integer, UserBalanceSummary> entry) {
-               return entry.getValue();
-           }
-       }));
+       return newArrayList(Collections2.transform(userBalanceSummaryMap.entrySet(), entry -> entry.getValue()));
     }
 
     private Map<Integer, UserBalanceSummary> getUserBalanceSummaryMap(List<User> users) {
         List<UserBalanceSummary> userBalanceSummaries = getUserBalanceSummaries(users);
 
-        return Maps.uniqueIndex(userBalanceSummaries, new Function<UserBalanceSummary, Integer>() {
-            @Override
-            public Integer apply(UserBalanceSummary userBalanceSummary) {
-                return userBalanceSummary.userId;
-            }
-        });
+        return Maps.uniqueIndex(userBalanceSummaries, userBalanceSummary -> userBalanceSummary.userId);
     }
 
     private List<UserBalanceSummary> getUserBalanceSummaries(List<User> users) {
-        return Lists.transform(users, new Function<User, UserBalanceSummary>() {
-            @Override
-            public UserBalanceSummary apply(User user) {
-                UserBalanceSummary userBalanceSummary = new UserBalanceSummary(user.getId(), user.getName(), 0);
-
-                return userBalanceSummary;
-            }
-        });
+        return Lists.transform(users, user -> new UserBalanceSummary(user.getId(), user.getName(), 0));
     }
 }
