@@ -9,7 +9,6 @@ import java.util.List;
 public class User implements Serializable {
     private Integer id;
     private String name;
-    private Double balance;
     private List<Expense> paidForExpenses;
     private ExpenseSheet expenseSheet;
 
@@ -23,11 +22,6 @@ public class User implements Serializable {
     @Column(name = "name")
     public String getName() {
         return name;
-    }
-
-    @Column(name = "balance")
-    public Double getBalance() {
-        return balance;
     }
 
     @OneToMany(mappedBy = "payer", fetch = FetchType.EAGER)
@@ -47,10 +41,6 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
     }
 
     public void setExpenseSheet(ExpenseSheet expenseSheet) {
