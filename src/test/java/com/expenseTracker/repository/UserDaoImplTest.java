@@ -17,7 +17,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class UserDaoTest {
+public class UserDaoImplTest {
     @Mock
     private SessionFactory sessionFactory;
     @Mock
@@ -102,15 +102,17 @@ public class UserDaoTest {
     }
 
     @Test
-    public void shouldReturnAllUsers() {
+    public void shouldReturnAllUsersOfExpenseSheet() {
+        int expenseSheetId = 1;
         Query query = mock(Query.class);
         User user = new User();
         List<User> expectedUsers = newArrayList(user);
 
-        when(currentSession.createQuery("from User")).thenReturn(query);
+        when(currentSession.createQuery("from User u where u.expenseSheet.id = :expenseSheetId")).thenReturn(query);
+        when(query.setParameter("expenseSheetId", 1)).thenReturn(query);
         when(query.list()).thenReturn(expectedUsers);
 
-        List<User> users = userDao.findAllUsers();
+        List<User> users = userDao.getUsersOfExpenseSheet(expenseSheetId);
 
         assertThat(users, is(expectedUsers));
     }

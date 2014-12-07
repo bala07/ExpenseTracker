@@ -50,10 +50,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> findAllUsers() {
+    public List<User> getUsersOfExpenseSheet(int expenseSheetId) {
         return sessionFactory
                 .getCurrentSession()
-                .createQuery("from User")
+                .createQuery("from User u where u.expenseSheet.id = :expenseSheetId")
+                .setParameter("expenseSheetId", expenseSheetId)
                 .list();
     }
 }

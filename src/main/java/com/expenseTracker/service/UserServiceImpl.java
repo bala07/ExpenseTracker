@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userDao.findAllUsers();
+    public List<User> getUsersOfExpenseSheet(int expenseSheetId) {
+        return userDao.getUsersOfExpenseSheet(expenseSheetId);
     }
 }

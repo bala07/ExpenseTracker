@@ -66,9 +66,10 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldFindAllUsers() {
-        userService.findAllUsers();
+        int expenseSheetId = 1;
+        userService.getUsersOfExpenseSheet(expenseSheetId);
 
-        verify(userDao).findAllUsers();
+        verify(userDao).getUsersOfExpenseSheet(expenseSheetId);
     }
 
 

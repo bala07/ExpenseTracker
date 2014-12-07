@@ -13,6 +13,6 @@ public interface UserDao {
 
     public User findUser(int id);
 
-    public List<User> findAllUsers();
+    public List<User> getUsersOfExpenseSheet(int expenseSheetId);
 
 }
