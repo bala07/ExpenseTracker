@@ -51,10 +51,11 @@ public class ExpenseDaoImpl implements ExpenseDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Expense> findAllExpenses() {
+    public List<Expense> getExpensesOfExpenseSheet(Integer expenseSheetId) {
         return sessionFactory
                 .getCurrentSession()
-                .createQuery("from Expense")
+                .createQuery("from Expense e where e.expenseSheet.id = :expenseSheetId")
+                .setParameter("expenseSheetId", expenseSheetId)
                 .list();
     }
 }

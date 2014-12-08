@@ -14,5 +14,5 @@ public interface ExpenseService {
 
     public Expense findExpense(int id);
 
-    public List<Expense> findAllExpenses();
+    public List<Expense> getExpensesOfExpenseSheet(Integer expenseSheetId);
 }

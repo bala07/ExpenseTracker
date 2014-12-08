@@ -38,7 +38,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<Expense> findAllExpenses() {
-        return expenseDao.findAllExpenses();
+    public List<Expense> getExpensesOfExpenseSheet(Integer expenseSheetId) {
+        return expenseDao.getExpensesOfExpenseSheet(expenseSheetId);
     }
 }

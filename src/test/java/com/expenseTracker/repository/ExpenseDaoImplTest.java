@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ExpenseDaoTest {
+public class ExpenseDaoImplTest {
 
     @Mock
     private SessionFactory sessionFactory;
@@ -107,6 +107,7 @@ public class ExpenseDaoTest {
 
     @Test
     public void shouldFindAllExpenses() {
+        Integer expenseSheetId = 1;
         Query query = mock(Query.class);
         Expense expense1 = new Expense();
         expense1.setId(1);
@@ -114,10 +115,11 @@ public class ExpenseDaoTest {
         expense2.setId(2);
         List expectedExpenses = newArrayList(expense1, expense2);
 
-        when(currentSession.createQuery("from Expense")).thenReturn(query);
+        when(currentSession.createQuery("from Expense e where e.expenseSheet.id = :expenseSheetId")).thenReturn(query);
+        when(query.setParameter("expenseSheetId", 1)).thenReturn(query);
         when(query.list()).thenReturn(expectedExpenses);
 
-        List<Expense> expenses = expenseDao.findAllExpenses();
+        List<Expense> expenses = expenseDao.getExpensesOfExpenseSheet(expenseSheetId);
 
         assertThat(expenses, is(expectedExpenses));
     }

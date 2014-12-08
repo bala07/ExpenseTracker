@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,9 +21,9 @@ public class ExpenseController {
 
     private final Logger logger = LoggerFactory.getLogger(ExpenseController.class);
 
-    @RequestMapping("/expenses")
-    public ModelAndView expenseList() {
-        List<Expense> expenses = expenseService.findAllExpenses();
+    @RequestMapping("{expenseSheetId}/expenses")
+    public ModelAndView expenseList(@PathVariable final Integer expenseSheetId) {
+        List<Expense> expenses = expenseService.getExpensesOfExpenseSheet(expenseSheetId);
         Map<String, List<Expense>> expenseListModel = new HashMap<String, List<Expense>>();
         expenseListModel.put("expenses", expenses);
 

@@ -66,11 +66,12 @@ public class ExpenseServiceImplTest {
 
     @Test
     public void shouldFindAllExpenses() {
+        Integer expenseSheetId = 1;
         List<Expense> expectedExpenses = newArrayList();
 
-        when(expenseDao.findAllExpenses()).thenReturn(expectedExpenses);
+        when(expenseDao.getExpensesOfExpenseSheet(expenseSheetId)).thenReturn(expectedExpenses);
 
-        List<Expense> expenses = expenseService.findAllExpenses();
+        List<Expense> expenses = expenseService.getExpensesOfExpenseSheet(expenseSheetId);
 
         assertThat(expenses, is(expectedExpenses));
     }
