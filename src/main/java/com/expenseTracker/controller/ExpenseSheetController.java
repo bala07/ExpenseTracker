@@ -25,10 +25,14 @@ import static com.google.common.collect.Maps.newHashMap;
 public class ExpenseSheetController {
     private final Logger LOGGER = LoggerFactory.getLogger(ExpenseSheetController.class);
 
-    @Autowired
     private ExpenseSheetService expenseSheetService;
-    @Autowired
     private DebtSettlementService debtSettlementService;
+
+    @Autowired
+    public ExpenseSheetController(ExpenseSheetService expenseSheetService, DebtSettlementService debtSettlementService) {
+        this.expenseSheetService = expenseSheetService;
+        this.debtSettlementService = debtSettlementService;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -43,17 +47,12 @@ public class ExpenseSheetController {
         LOGGER.info("Created new expense sheet with id => {}", expenseSheet.getId());
         LOGGER.info("Redirecting to => {}", "/expenseSheet/" + expenseSheet.getId());
 
-        System.out.println("expenseSheet = " + expenseSheet.getId());
-
         return new ModelAndView("redirect:/expense-sheet/" + expenseSheet.getId());
     }
 
     @RequestMapping(value = "/expense-sheet/{expenseSheetId}", method = RequestMethod.GET)
     public ModelAndView getExpenseSheet(@PathVariable int expenseSheetId) {
         ExpenseSheet expenseSheet = expenseSheetService.getExpenseSheet(expenseSheetId);
-
-        LOGGER.info("Number of users => {}", expenseSheet.getUsers().size());
-        LOGGER.info("Number of expenses => ", expenseSheet.getExpenses().size());
 
         Map<String, ExpenseSheet> model = newHashMap();
         model.put("expenseSheet", expenseSheet);
@@ -67,12 +66,7 @@ public class ExpenseSheetController {
 
         List<Settlement> settlements = debtSettlementService.computeSettlements(expenseSheet);
 
-        List<SettlementViewModel> settlementViewModelList = Lists.transform(settlements, new Function<Settlement, SettlementViewModel>() {
-            @Override
-            public SettlementViewModel apply(Settlement settlement) {
-                return new SettlementViewModel(settlement.debtorName, settlement.creditorName, settlement.amountSettled);
-            }
-        });
+        List<SettlementViewModel> settlementViewModelList = Lists.transform(settlements, settlement -> new SettlementViewModel(settlement.debtorName, settlement.creditorName, settlement.amountSettled));
 
         Map<String, List<SettlementViewModel>> model = newHashMap();
         model.put("settlements", settlementViewModelList);
