@@ -16,8 +16,12 @@ import java.util.Map;
 
 @Controller
 public class ExpenseController {
-    @Autowired
     private ExpenseService expenseService;
+
+    @Autowired
+    public ExpenseController(ExpenseService expenseService) {
+        this.expenseService = expenseService;
+    }
 
     private final Logger logger = LoggerFactory.getLogger(ExpenseController.class);
 
@@ -28,7 +32,6 @@ public class ExpenseController {
         expenseListModel.put("expenses", expenses);
 
         logger.info("Number of expenses => " + expenses.size());
-        logger.info("Expense id => " + expenses.get(0).getId());
 
         return new ModelAndView("expense_list", expenseListModel);
     }
